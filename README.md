@@ -8,6 +8,7 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 ## 🚀 Tech Stack
 
 **Backend:** Spring Boot, WebSocket, MongoDB
+
 **Frontend:** React, TailwindCSS
 
 ---
