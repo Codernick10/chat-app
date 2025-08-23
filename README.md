@@ -46,5 +46,8 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 
 ## ✍️ Authors
 
-Shreya Midya
+Shreya Midya 
+Email: shreyamidya2003@gmail.com
+
 Nitesh Kumar
+Email: nitesh20010101@gmail.com
