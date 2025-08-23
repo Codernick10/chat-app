@@ -8,7 +8,6 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 ## 🚀 Tech Stack
 
 **Backend:** Spring Boot, WebSocket, MongoDB
-
 **Frontend:** React, TailwindCSS
 
 ---
@@ -24,15 +23,15 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 
  ## 🔗 API Endpoints
  
-  **Room Management**
+**Room Management**
 - `POST /room/create` → Create a new room
 - `GET /room/join` → Join an existing room
 
-  **Messaging**
+**Messaging**
 - `POST /room/{roomId}/messages` → Send a message (save to MongoDB and broadcast)
 - `GET /room/{roomId}/messages `→ Fetch all messages for a room
 
-** WebSocket**
+**WebSocket**
 - `Endpoint: /chat` → Handles real-time join + messaging inside rooms
 
  ---
