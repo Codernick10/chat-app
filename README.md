@@ -19,7 +19,7 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 - Store and retrieve messages from MongoDB
 - Simple and responsive chat UI
 
-  ---
+---
 
  ## 🔗 API Endpoints
  
@@ -34,7 +34,7 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 **WebSocket**
 - `Endpoint: /chat` → Handles real-time join + messaging inside rooms
 
- ---
+---
 
  ## 📌 Project Status
 
