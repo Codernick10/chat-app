@@ -38,7 +38,7 @@ const JoinCreateChat = () => {
                   Join Room
             </button>
 
-            <button className="px-3 py-2 dark:bg-orange-500 hover:dark:bg-orange-800 rounded-full">
+            <button className="px-3 py-2 dark:bg-green-700 hover:dark:bg-green-900 rounded-full">
                   Create Room
             </button>
            </div>
