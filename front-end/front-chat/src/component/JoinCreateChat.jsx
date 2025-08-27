@@ -1,7 +1,55 @@
 import React from 'react';
 import chatIcon from "../assets/chat.png"
-
+import { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import {  createRoomApi } from "../services/RoomService";
 const JoinCreateChat = () => {
+  const [detail, setDetail] = useState ({
+
+    roomId: "",
+    userName: "",
+
+});
+
+function handleFormInputChange(event) {
+  setDetail({
+       ...detail,
+  [event.target.name]: event.target.value,
+  });
+
+}
+
+function validateForm(){
+  if(detail.roomId === "" || detail.userName === ""){
+    toast.error("Invalid Input !!")
+    return false;
+  }
+  
+  return true;
+}
+
+ function joinChat() {
+      if(validateForm()){
+        //join chat
+      }
+ }
+
+async function createRoom (){
+     if(validateForm()){
+      //create room
+      console.log(detail);
+      // call api to create room on backend
+      try{
+        const response=await createRoomApi(detail.roomId)
+        console.log(response)
+        toast.success("Room is created successfully !!");
+        joinChat(); 
+      } catch(error){
+         console.log(error);
+          console.log("Error in creating room");
+      }
+     }
+ }
   return (
     <div className='min-h-screen flex items-center justify-center'>
        <div className='p-10 dark:border-gray-700 border w-full flex flex-col gap-5 max-w-md rounded dark:bg-gray-900 shadow'>
@@ -18,7 +66,13 @@ const JoinCreateChat = () => {
               <label htmlFor="name" className="block font-medium mb-2">
                 Your Name
               </label>
-              <input type="text"
+              <input
+               onChange={handleFormInputChange}
+               value={detail.userName}
+              type="text"
+              id="name"
+              name="userName"
+              placeholder="Enter The Name"
               className="w-full dark:bg-gray-600 px-4 py-2 border dark:border-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
                />
            </div>
@@ -27,18 +81,28 @@ const JoinCreateChat = () => {
               <label htmlFor="name" className="block font-medium mb-2">
                 Room ID / New Room ID
               </label>
-              <input type="text"
+              <input
+              name="roomId"
+              onChange={handleFormInputChange}
+              value={detail.roomId} 
+              type="text"
+              id= "name"
+              placeholder='Enter Romm ID'
               className="w-full dark:bg-gray-600 px-4 py-2 border dark:border-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
                />
            </div>
 
            {/* button */}
            <div className="flex justify-center gap-2 mt-4">
-            <button className="px-3 py-2 dark:bg-blue-500 hover:dark:bg-blue-800 rounded-full">
+            <button 
+            onClick={joinChat}
+             className="px-3 py-2 dark:bg-blue-500 hover:dark:bg-blue-800 rounded-full">
                   Join Room
             </button>
 
-            <button className="px-3 py-2 dark:bg-green-700 hover:dark:bg-green-900 rounded-full">
+            <button
+            onClick={createRoom}
+             className="px-3 py-2 dark:bg-green-700 hover:dark:bg-green-900 rounded-full">
                   Create Room
             </button>
            </div>
