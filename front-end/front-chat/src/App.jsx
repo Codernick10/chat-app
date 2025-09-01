@@ -1,11 +1,9 @@
-import viteLogo from "/vite.svg";
-import toast from 'react-hot-toast';
 import './App.css';
-import JoinCreateChat from "./component/joinCreateChat";
-import { useState } from 'react';
+import JoinCreateChat from "./component/JoinCreateChat";
+
 
 function App() {
-  const [count, setCount] = useState(0);
+ 
 
 
   return (
