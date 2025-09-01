@@ -3,7 +3,7 @@ import {  createContext, useContext, useState } from "react";
 const ChatContext = createContext();
 
 
-export const  ChatProvider = ({ Children })=> {
+export const  ChatProvider = ({ children })=> {
 
     const [roomId, setRoomId] = useState("");
     const [currentUser, setCurrentUser]=useState("");
@@ -12,7 +12,7 @@ export const  ChatProvider = ({ Children })=> {
          <ChatContext.Provider
               value={{roomId, currentUser,connected, setRoomId, setCurrentUser, setConnected}}
        >
-            {Children}
+            {children}
          </ChatContext.Provider>
     );    
 };

@@ -1,5 +1,5 @@
 import './App.css';
-import JoinCreateChat from "./component/JoinCreateChat";
+import JoinCreateChat from "./components/JoinCreateChat";
 
 
 function App() {
