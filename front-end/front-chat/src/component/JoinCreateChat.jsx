@@ -1,8 +1,9 @@
-import React from 'react';
 import chatIcon from "../assets/chat.png"
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import {  createRoomApi } from "../services/RoomService";
+import {  createRoomApi, joinChatApi } from "../services/RoomService";
+import useChatContext from '../context/ChatContext';
+
 const JoinCreateChat = () => {
   const [detail, setDetail] = useState ({
 
@@ -11,6 +12,8 @@ const JoinCreateChat = () => {
 
 });
 
+const {roomId, userName, setRoomId, setCurrentUser, setConnected } = useChatContext();
+const navigate=useNavigate()
 function handleFormInputChange(event) {
   setDetail({
        ...detail,
@@ -19,7 +22,7 @@ function handleFormInputChange(event) {
 
 }
 
-function validateForm(){
+ function validateForm(){
   if(detail.roomId === "" || detail.userName === ""){
     toast.error("Invalid Input !!")
     return false;
@@ -28,9 +31,28 @@ function validateForm(){
   return true;
 }
 
- function joinChat() {
+async function joinChat() {
       if(validateForm()){
         //join chat
+     
+        try{
+               const room= await joinChatApi(detail.roomId);
+      toast.success("joined..")
+       setCurrentUser(detail.userName);
+        setRoomId(room.roomId);
+        setConnected(true);
+
+        navigate("/chat");
+        }catch(error){
+          if (error.status == 400) {
+            toast.error(error.response.data);
+          } else {
+            toast.error("Error in joining room");
+          }
+          
+           console.log(error);
+        }
+
       }
  }
 
@@ -43,9 +65,20 @@ async function createRoom (){
         const response=await createRoomApi(detail.roomId)
         console.log(response)
         toast.success("Room is created successfully !!");
-        joinChat(); 
+        //join the room
+        setCurrentUser(detail.userName);
+        setRoomId(response.roomId);
+        setConnected(true);
+
+        navigate("/chat");
+        //forward to chat page...
       } catch(error){
          console.log(error);
+         if(error.status == 400) {
+          toast.error("Room already exists !!");
+         } else {
+          toast("Error in creating room !!");
+         }
           console.log("Error in creating room");
       }
      }
