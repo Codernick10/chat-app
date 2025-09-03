@@ -38,9 +38,6 @@ It allows users to create/join chat rooms, send/receive messages instantly, and 
 ---
 
  ## 📌 Project Status
-
-✅ Repository initialized & code pushed.
-
 🚧 Project development in progress.
 
 ---
