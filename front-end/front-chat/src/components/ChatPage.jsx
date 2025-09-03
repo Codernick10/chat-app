@@ -7,12 +7,12 @@ import { useNavigate } from "react-router";
 import { Stomp } from "@stomp/stompjs";
 import toast from "react-hot-toast";
 import { getMessagess } from "../services/RoomService";
-
+import { timeAgo } from '../config/helper';
 
 
 const ChatPage = () => {
 
-  const {roomId, currentUser, connected}=useChatContext();
+  const {roomId, currentUser, connected,setConnected,setRoomId,setCurrentUser}=useChatContext();
 //console.log(roomId);
   //console.log(currentUser);
   //console.log(connected);
@@ -26,18 +26,7 @@ const ChatPage = () => {
   }, [connected, roomId, currentUser]);
 
    const [messages, setMessages] = useState([
-  {
-  content: "Hello ?",
-  sender: "Nitesh",
-  },
-  {
-  content: "Hello ?",
-  sender: "shreya",
-  },
-  {
-  content: "Hii ?",
-  sender: "shubham",
-  },
+
 
 ]);
 
@@ -62,6 +51,7 @@ const [stompClient, setStompClient] = useState(null);
   }, []);
 
   //scroll down
+
 
   useEffect(() => {
     if (chatBoxRef.current) {
@@ -128,9 +118,17 @@ const [stompClient, setStompClient] = useState(null);
       setInput("");
     }
 
-    //
+    
   };
-
+    
+    //handle Logout
+    function handleLogout() {
+    stompClient.disconnect();
+    setConnected(false);
+    setRoomId("");
+    setCurrentUser("");
+    navigate("/");
+  }
 
   return (
     <div className="">
@@ -139,7 +137,7 @@ const [stompClient, setStompClient] = useState(null);
             {/* room name container */}
             <div>
                 <h1 className="text-xl font-semibold">Room:
-                    <span>Family Room</span>
+                    <span>{roomId}</span>
                 </h1>
             </div>
            
@@ -147,18 +145,20 @@ const [stompClient, setStompClient] = useState(null);
             <div>
                 
                 <h1 className="text-xl font-semibold">User:
-                    <span>Nitesh Kumar</span>
+                    <span>{currentUser}</span>
                 </h1>
             </div>
              {/* button: leave room */}
             <div>
-                 <button className="dark:bg-red-500 dark:hover:bg-red-700 px-3 py-3 rounded-full">
+                 <button onClick={handleLogout} className="dark:bg-red-500 dark:hover:bg-red-700 px-3 py-3 rounded-full">
                     Leave Room
                  </button>
             </div>    
         </header>
 
-        <main className="py-20 px-10 w-2/3 dark:bg-slate-600 mx-auto h-screen overflow-auto ">
+        <main 
+           ref={chatBoxRef}
+           className="py-20 px-10 w-2/3 dark:bg-slate-600 mx-auto h-screen overflow-auto ">
            
            
                {messages.map((message, index) => (
@@ -170,6 +170,7 @@ const [stompClient, setStompClient] = useState(null);
                         <div className=" flex flex-col gap-1 ">
                           <p className="text-sm font-bold">{message.sender}</p>
                           <p>{message.content}</p>
+                          <p className="text-xs text-gray-400">{timeAgo(message.timeStamp)}</p>
                         </div>
                       </div>
                     </div> 
