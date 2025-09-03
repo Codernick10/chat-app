@@ -186,6 +186,12 @@ const [stompClient, setStompClient] = useState(null);
                  <input 
                    value ={input}
                    onChange={(e) => {setInput(e.target.value)}}
+
+                   onKeyDown={(e) => {
+                 if (e.key === "Enter") {
+                  sendMessage();
+                }
+               }}
                  type="text" 
                 placeholder="Type your message here..." 
                  className=" w-full dark:border-gray-600 b dark:bg-gray-800 px-5 py-2 rounded-full h-full focus:outline-none" />
