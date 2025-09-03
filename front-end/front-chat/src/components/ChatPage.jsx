@@ -6,16 +6,16 @@ import { baseURL } from "../config/AxiosHelper";
 import { useNavigate } from "react-router";
 import { Stomp } from "@stomp/stompjs";
 import toast from "react-hot-toast";
-
+import { getMessagess } from "../services/RoomService";
 
 
 
 const ChatPage = () => {
 
   const {roomId, currentUser, connected}=useChatContext();
-  console.log(roomId);
-  console.log(currentUser);
-  console.log(connected);
+//console.log(roomId);
+  //console.log(currentUser);
+  //console.log(connected);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -48,7 +48,31 @@ const [stompClient, setStompClient] = useState(null);
 
    //page init:
    //message ko load karna honge
+   useEffect(() => {
+    async function loadMessages() {
+      try {
+        const messages = await getMessagess(roomId);
+        // console.log(messages);
+        setMessages(messages);
+      } catch (error) {}
+    }
+    if (connected) {
+      loadMessages();
+    }
+  }, []);
 
+  //scroll down
+
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scroll({
+        top: chatBoxRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
+    
+    
    //stompClient ko init karne honge
    //subscribe
 
